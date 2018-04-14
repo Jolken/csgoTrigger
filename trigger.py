@@ -1,54 +1,57 @@
 import numpy as np
 from PIL import ImageGrab
-import cv2
+from cv2 import cvtColor, COLOR_BGR2GRAY, Canny
 import time
 import keyboard
 import winsound
 from directkeys import PressKey, ReleaseKey
 
-WIDTH = ImageGrab.grab().size[0]/2
-HEIGHT = ImageGrab.grab().size[1]/2 
+screenShot = ImageGrab.grab()
+HALF_WIDTH = screenShot.size[0]/2
+HALF_HEIGHT = screenShot.size[1]/2 
 HOTKEY = 'shift+z'
-FIRE_KEY = 0x18
+FIRE_KEY = 0x18 #key codes --> https://msdn.microsoft.com/en-us/library/windows/desktop/bb321074(v=vs.85).aspx 
 SHOTS_NUMBER = 5
-def inverse_enable():
-    global enable
-    if enable:
+del screenShot
+isEnabled = False
+
+def inverseIsEnabled():
+    global isEnabled
+    if isEnabled:
         winsound.Beep(1000, 200)
         print('Disabled')
-        enable = False
+        isEnabled = False
     else:
         winsound.Beep(500, 200)
         print('Enabled')
-        enable = True
+        isEnabled = True
 
-def process_img(image):
-    return cv2.Canny(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY), threshold1=100, threshold2=200)
+#Detect edges in image
+def processImg(image):
+    return Canny(cvtColor(image, COLOR_BGR2GRAY), threshold1=0, threshold2=100)
 
 def makeFire():
-    for i in range(SHOTS_NUMBER):
+    for x in range(SHOTS_NUMBER):
         PressKey(FIRE_KEY)
         time.sleep(0.1)
         ReleaseKey(FIRE_KEY)
         time.sleep(0.05)
+    del x
 
-def main():
-    print('Press '+HOTKEY+' to enable cheat for '+str(SHOTS_NUMBER)+' shots')
+def takeCrosshair():
+    return np.array(ImageGrab.grab(bbox=(HALF_WIDTH-5, HALF_HEIGHT-5, HALF_WIDTH+5, HALF_HEIGHT+5)))
+
+def trigger():
     while True:
-        if enable:
-            screen1 = process_img(np.array(ImageGrab.grab(bbox=(WIDTH-10, HEIGHT-10, WIDTH+10, HEIGHT+10))))
+        if isEnabled:
+            crosshair1 = processImg(takeCrosshair())
             time.sleep(0.00000000001)
-            screen2 = process_img(np.array(ImageGrab.grab(bbox=(WIDTH-10, HEIGHT-10, WIDTH+10, HEIGHT+10))))
-            if (screen1 != screen2).any():
+            crosshair2 = processImg(takeCrosshair())
+            if (crosshair1 != crosshair2).any():
                 makeFire()
-                inverse_enable()
+                inverseIsEnabled()
                 
-
-
-
-
 if __name__ == '__main__':
-    enable = False
-    img = ImageGrab.grab()
-    keyboard.add_hotkey(HOTKEY, inverse_enable)
-    main()
+    keyboard.add_hotkey(HOTKEY, inverseIsEnabled)
+    print('Press '+HOTKEY+' to enable cheat for '+str(SHOTS_NUMBER)+' shots')
+    trigger()
