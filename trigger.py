@@ -11,7 +11,7 @@ HALF_WIDTH = screenShot.size[0]/2
 HALF_HEIGHT = screenShot.size[1]/2 
 HOTKEY = 'shift+z'
 FIRE_KEY = 0x18 #key codes --> https://msdn.microsoft.com/en-us/library/windows/desktop/bb321074(v=vs.85).aspx 
-SHOTS_NUMBER = 5
+SHOTS_NUMBER = 5 #different on each weapon
 del screenShot
 isEnabled = False
 
@@ -28,7 +28,7 @@ def inverseIsEnabled():
 
 #Detect edges in image
 def processImg(image):
-    return Canny(cvtColor(image, COLOR_BGR2GRAY), threshold1=0, threshold2=100)
+    return Canny(cvtColor(image, COLOR_BGR2GRAY), threshold1=200, threshold2=300)
 
 def makeFire():
     for x in range(SHOTS_NUMBER):
@@ -39,7 +39,7 @@ def makeFire():
     del x
 
 def takeCrosshair():
-    return np.array(ImageGrab.grab(bbox=(HALF_WIDTH-5, HALF_HEIGHT-5, HALF_WIDTH+5, HALF_HEIGHT+5)))
+    return np.array(ImageGrab.grab(bbox=(HALF_WIDTH-10, HALF_HEIGHT-10, HALF_WIDTH+10, HALF_HEIGHT+10)))
 
 def trigger():
     while True:
