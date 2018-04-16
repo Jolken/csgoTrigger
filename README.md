@@ -27,12 +27,12 @@ $ pip install opencv-python
 $ pip install keyboard
 ```
 ### How to start
-Open trigger.py with python or
+Open [trigger.py](trigger.py)trigger.py with python or
 ```
 $ python /.../csgoTrigger/trigger.py
 ```
 ### Change hotkey
-Change the variable HOTKEY in trigger.py. For example
+Change the variable HOTKEY in [trigger.py](trigger.py)trigger.py. For example
 ```
 HOTKEY = 'alt+r'
 HOTKEY = 'q'
