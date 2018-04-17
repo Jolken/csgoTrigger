@@ -49,7 +49,7 @@ FIRE_KEY = 0x18 #'O'
 FIRE_KEY = 0x12 #'E'
 FIRE_KEY = 0x4B # NUMPAD4
 ```
-List of hex codes can be found [here](https://msdn.microsoft.com/en-us/library/windows/desktop/bb321074(v=vs.85).aspx), [here](https://gist.github.com/tracend/912308) and [there](http://www.flint.jp/misc/?q=dik&lang=en).
+List of hex codes can be found [here](https://msdn.microsoft.com/en-us/library/windows/desktop/bb321074(v=vs.85).aspx), [here](https://gist.github.com/tracend/912308) and [here](http://www.flint.jp/misc/?q=dik&lang=en).
 
 ### License
 
