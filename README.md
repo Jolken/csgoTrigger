@@ -12,7 +12,7 @@ If he was in your cross, the script would probably shoot and kill him :)
 ### Installation
 Download zip archive or
 ```
-$ git clone https://github.com/Jolken/csgoTrigger
+$ git clone https://github.com/Jolken/csgoTrigger.git
 ```
 Install packages
 ```
